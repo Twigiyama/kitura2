@@ -47,14 +47,18 @@ router.get("/polls/list") {
                     poll["title"] = document["doc"]["title"].stringValue
                     poll["option1"] = document["doc"]["option1"].stringValue
                     poll["option2"] = document["doc"]["option2"].stringValue
-                    poll["votes1"] = document["doc"]["votes1"].stringValue
-                    poll["votes2"] = document["doc"]["votes2"].stringValue
+                    poll["votes1"] = document["doc"]["votes1"].intValue
+                    poll["votes2"] = document["doc"]["votes2"].intValue
+                    polls.append(poll)
+                    }
                 }
+            let result: [String: Any] = ["result": status, "polls": polls]
+            let json = JSON(result)
+
+            response.status(.OK).send(json: json)
+
             }
-
-
         }
-    }
 }
 
     router.post("/polls/create") {
