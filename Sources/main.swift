@@ -88,7 +88,7 @@ router.get("/polls/list") {
                     continue
                 }
             }
-
+            //  if there is no value, then send back bad request
             try response.status(.badRequest).end()
             return
         }
