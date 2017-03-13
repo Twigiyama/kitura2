@@ -60,11 +60,37 @@ router.get("/polls/list") {
             }
         }
 }
-
+    router.post("/polls/create", middleware: BodyParser())
     router.post("/polls/create") {
         request, response, next in
         defer{
             next()
+        }
+        // Check that the request body has something in it
+        guard let values = request.body else {
+            try response.status(.badRequest).end()
+            return
+        }
+
+        // Check if request if body has urlEncoded values
+        guard case .urlEncoded(let body) = values else {
+            try response.status(.badRequest).end()
+            return
+        }
+
+        let fields = ["title", "option1", "option2"]
+
+        var poll = [String: Any]()
+        for field in fields {
+            if let value = body[field]?.trimmingCharacters(in: .whitespacesAndNewlines) {
+                if value.characters.count > 0 {
+                    poll[field] = value
+                    continue
+                }
+            }
+
+            try response.status(.badRequest).end()
+            return
         }
     }
 
