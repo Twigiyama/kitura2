@@ -92,6 +92,31 @@ router.get("/polls/list") {
             try response.status(.badRequest).end()
             return
         }
+
+        // fill in default values for the vote counts
+        poll["votes1"] = 0
+        poll["votes2"] = 0
+
+        // convert it to JSON which is what CouchDB ingests
+
+        let json = JSON(poll)
+
+        database.create(json) {id, revision, doc, error in
+            defer { next() }
+
+            if let id = id {
+                //means id is not null so document was successfully created
+                let status = ["status": "ok", "id: id"]
+                let result = ["result": status]
+                let json = JSON(result)
+
+                response.status(.OK).send(json: json)
+            } else {
+                //something has gone catastrophically wrong
+                response.status(.internalServerError).send(json: json)
+            }
+
+        }
     }
 
     router.post("/polls/vote/:pollid/:option") {
