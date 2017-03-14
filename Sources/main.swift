@@ -106,7 +106,7 @@ router.get("/polls/list") {
 
             if let id = id {
                 //means id is not null so document was successfully created
-                let status = ["status": "ok", "id: id"]
+                let status = ["status": "ok", "id": id]
                 let result = ["result": status]
                 let json = JSON(result)
 
