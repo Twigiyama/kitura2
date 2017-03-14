@@ -113,6 +113,10 @@ router.get("/polls/list") {
                 response.status(.OK).send(json: json)
             } else {
                 //something has gone catastrophically wrong
+                let errorMessage = error?.localizedDescription ?? "Unknown error"
+                let status = ["status": "error", "message": errorMessage]
+                let result = ["result": status]
+                let json = JSON(result)
                 response.status(.internalServerError).send(json: json)
             }
 
