@@ -3,12 +3,14 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Packages/CCurl-0.2.3" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Packages/CEpoll-0.1.0" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Packages/HeliumLogger-1.6.0" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Packages/Kitura-1.6.2" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Packages/Kitura-CouchDB-1.6.0" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Packages/Kitura-TemplateEngine-1.6.0" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Packages/Kitura-net-1.6.2" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Packages/LoggerAPI-1.6.0" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Packages/OpenSSL-0.3.1" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Packages/SSLService-0.12.26" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Packages/Socket-0.12.33" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Packages/SwiftyJSON-15.0.5" vcs="Git" />

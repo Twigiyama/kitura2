@@ -14,7 +14,12 @@ let database = client.database("polls")
 
 let router = Router()
 
-
+extension String {
+    func removingHTMLEncoding() -> String {
+        let result = self.replacingOccurrences(of: "+", with: " ")
+        return result.removingPercentEncoding ?? result
+    }
+}
 
 
 router.get("/polls/list") {
@@ -84,7 +89,7 @@ router.get("/polls/list") {
         for field in fields {
             if let value = body[field]?.trimmingCharacters(in: .whitespacesAndNewlines) {
                 if value.characters.count > 0 {
-                    poll[field] = value
+                    poll[field] = value.removingHTMLEncoding()
                     continue
                 }
             }
