@@ -148,7 +148,7 @@ router.get("/polls/list") {
             if let error = error {
                 //something went wrong
                 let errorMessage = error.localizedDescription
-                let status = ["status": "error", "message": errorMessage]
+                let status = ["status": "error1", "message": errorMessage]
                 let result = ["result": status]
                 let json = JSON(result)
 
@@ -160,7 +160,7 @@ router.get("/polls/list") {
                 // update the document
                 var newDocument = doc
                 let id = doc["_id"].stringValue
-                let rev = doc["rev"].stringValue
+                let rev = doc["_rev"].stringValue
 
                 if option == "1" {
                     newDocument["votes1"].intValue += 1
@@ -173,7 +173,7 @@ router.get("/polls/list") {
                     defer{next()}
 
                     if let error = error {
-                        let status = ["status": "error"]
+                        let status = ["status": "error2"]
                         let result = ["result": status]
                         let json = JSON(result)
 
