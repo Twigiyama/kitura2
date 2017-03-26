@@ -128,6 +128,69 @@ router.get("/polls/list") {
         }
     }
 
+    router.post("polls/delete/:pollid") {
+        request, response, next in
+        defer{
+            next()
+        }
+
+        //ensure the parameter has a value
+
+        guard let poll = request.parameters["pollid"] else
+        {
+            try response.status(.badRequest).end()
+            return
+        }
+
+        //we need the rev of the document to delete it
+        database.retrieve(poll) {doc, error in
+
+            if let error = error {
+                // something went wrong
+                let errorMessage = error.localizedDescription
+                let status = ["status": "error3", "message": errorMessage]
+                let result = ["result": status]
+                let json = JSON(result)
+
+                response.status(.notFound).send(json:json)
+                next()
+            } else if let doc = doc {
+
+                //get the id and the rev of the document to delete
+                let id = doc["id"].stringValue
+                let rev = doc["_rev"].stringValue
+
+                //attempt to delete the document
+                database.delete(id, rev: rev) { error in
+
+                    if let error = error {
+
+                        let errorMessage = error.localizedDescription
+                        let status = ["status": "error", "message": errorMessage]
+                        let result = ["result": status]
+                        let json = JSON(json)
+
+                        //can't delete for some reason.  Not sure what status response to put really.
+                        response.status(.internalServerError).send(json:json)
+
+
+                        next()
+                    } else {
+                        let status = ["status": "OK"]
+                        let result = ["result": status]
+                        let json = JSON(json)
+
+                        response.status(.OK).send(json: json)
+                    }
+                }
+            }
+
+
+        }
+
+
+    }
+
     router.post("/polls/vote/:pollid/:option") {
         request, response, next in
         defer{
@@ -146,6 +209,7 @@ router.get("/polls/list") {
         database.retrieve(poll) { doc, error in
 
             if let error = error {
+
                 //something went wrong
                 let errorMessage = error.localizedDescription
                 let status = ["status": "error1", "message": errorMessage]
